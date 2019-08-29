@@ -7,21 +7,17 @@ public extension RangeSlider {
         copy.height = length
         return copy
     }
-}
-
-public extension RangeSlider {
-    func knobSize(_ size: CGSize) -> Self {
-//        var copy = self
-//        copy.styleKnobSize = size
-        
-        return self
+    
+    func thickness(_ length: CGFloat) -> Self {
+        var copy = self
+        copy.thickness = length
+        return copy
     }
-}
-
-public extension ValueSlider {
+    
     func knobSize(_ size: CGSize) -> Self {
         var copy = self
-        copy.preferredKnobSize = size
+        copy.knobSize = size
         return copy
     }
 }
+

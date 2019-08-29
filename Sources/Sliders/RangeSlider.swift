@@ -1,9 +1,6 @@
 import SwiftUI
 
 public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobView : InsettableShape>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
-    @Environment(\.sliderStyle) var style
-    @Environment(\.sliderKnobSize) var styleKnobSize: CGSize
-    
     let range: Binding<ClosedRange<V>>
     let bounds: ClosedRange<V>
     let step: V
@@ -14,12 +11,23 @@ public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
     
     let onEditingChanged: (Bool) -> Void
     
-    var height: CGFloat? = nil
-    var preferredKnobSize: CGSize? = nil
-    
-    var knobSize: CGSize {
-        preferredKnobSize ?? style.knobSize
-    }
+    var height: CGFloat = 44
+    var thickness: CGFloat = 3
+    var knobSize: CGSize = CGSize(width: 27, height: 27)
+    var knobColor: Color = .white
+    var knobCornerRadius: CGFloat = 13.5
+    var knobBorderColor: Color = .clear
+    var knobBorderWidth: CGFloat = 0
+    var knobShadowColor: Color = Color.black.opacity(0.3)
+    var knobShadowRadius: CGFloat = 2
+    var knobShadowX: CGFloat = 0
+    var knobShadowY: CGFloat = 1.5
+    var valueColor: Color = .accentColor
+    var trackColor: Color = Color.secondary.opacity(0.25)
+    var trackCornerRadius: CGFloat? = nil
+    var trackBorderColor: Color = .clear
+    var trackBorderWidth: CGFloat = 0
+    var clippedValue: Bool = true
     
     @State private var dragOffsetX: CGFloat? = nil
 
@@ -28,38 +36,37 @@ public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
             ZStack(alignment: .init(horizontal: .leading, vertical: .center)) {
                 Group {
                     self.trackView
-                        .foregroundColor(self.style.trackColor)
-                        .frame(width: geometry.size.width, height: self.style.thickness)
+                        .foregroundColor(self.trackColor)
+                        .frame(width: geometry.size.width, height: self.thickness)
                                     
                     self.valueView
-                        .foregroundColor(self.style.valueColor)
-                        .frame(width: geometry.size.width, height: self.style.thickness)
-                        .cornerRadius(self.style.trackCornerRadius ?? self.style.thickness / 2)
+                        .foregroundColor(self.valueColor)
+                        .frame(width: geometry.size.width, height: self.thickness)
+                        .cornerRadius(self.trackCornerRadius ?? self.thickness / 2)
                         .mask(
                             Rectangle()
                                 .frame(
-                                    width: self.style.clippedValue ? (self.valueWidth(overallWidth: geometry.size.width) + self.knobSize.width) : geometry.size.width,
-                                    height: self.style.thickness
+                                    width: self.clippedValue ? (self.valueWidth(overallWidth: geometry.size.width) + self.knobSize.width) : geometry.size.width,
+                                    height: self.thickness
                                 )
                                 .fixedSize()
-                                .offset(x: self.style.clippedValue ? self.maskOffset(overallWidth: geometry.size.width) : 0)
+                                .offset(x: self.clippedValue ? self.maskOffset(overallWidth: geometry.size.width) : 0)
                         )
                 }
                 .overlay(
                     self.trackView
-                        .strokeBorder(self.style.trackBorderColor, lineWidth: self.style.trackBorderWidth)
+                        .strokeBorder(self.trackBorderColor, lineWidth: self.trackBorderWidth)
                 )
-
-
+                
                 self.knobView
                     .overlay(
                         self.knobView
-                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
+                            .strokeBorder(self.knobBorderColor, lineWidth: self.knobBorderWidth)
                     )
                     .frame(width: self.knobSize.width, height: self.knobSize.height)
-                    .cornerRadius(self.style.knobCornerRadius)
-                    .foregroundColor(self.style.knobColor)
-                    .shadow(color: self.style.knobShadowColor, radius: self.style.knobShadowRadius, x: self.style.knobShadowX, y: self.style.knobShadowY)
+                    .cornerRadius(self.knobCornerRadius)
+                    .foregroundColor(self.knobColor)
+                    .shadow(color: self.knobShadowColor, radius: self.knobShadowRadius, x: self.knobShadowX, y: self.knobShadowY)
                     .offset(x: self.xForLowerBound(width: geometry.size.width))
                     .gesture(
                         DragGesture()
@@ -84,14 +91,14 @@ public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                 self.knobView
                     .overlay(
                         self.knobView
-                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
+                            .strokeBorder(self.knobBorderColor, lineWidth: self.knobBorderWidth)
                     )
                     .frame(width: self.knobSize.width, height: self.knobSize.height)
-                    .cornerRadius(self.style.knobCornerRadius)
+                    .cornerRadius(self.knobCornerRadius)
                     .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
                     .rotationEffect(Angle(degrees: 180))
-                    .foregroundColor(self.style.knobColor)
-                    .shadow(color: self.style.knobShadowColor, radius: self.style.knobShadowRadius, x: self.style.knobShadowX, y: self.style.knobShadowY)
+                    .foregroundColor(self.knobColor)
+                    .shadow(color: self.knobShadowColor, radius: self.knobShadowRadius, x: self.knobShadowX, y: self.knobShadowY)
                     .offset(x: self.knobSize.width + self.xForUpperBound(width: geometry.size.width))
                     .gesture(
                         DragGesture()
@@ -113,9 +120,9 @@ public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                             }
                     )
             }
-            .frame(height: self.height ?? self.style.height)
+            .frame(height: self.height)
         }
-        .frame(height: self.height ?? self.style.height)
+        .frame(height: self.height)
     }
     
     func maskOffset(overallWidth: CGFloat) -> CGFloat {

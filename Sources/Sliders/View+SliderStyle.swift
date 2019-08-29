@@ -1,9 +1,6 @@
 import SwiftUI
 
 extension View {
-    public func height(_ length: CGFloat) -> some View {
-        self.environment(\.sliderStyle.height, length)
-    }
     
     public func thickness(_ length: CGFloat) -> some View {
         self.environment(\.sliderStyle.thickness, length)
