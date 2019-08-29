@@ -1,11 +1,16 @@
 import SwiftUI
 
-public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
+public struct RangeSlider<V, TrackView: InsettableShape, ValueView: View, KnobView : InsettableShape>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
     @Environment(\.sliderStyle) var style
     
     let range: Binding<ClosedRange<V>>
     let bounds: ClosedRange<V>
     let step: V
+    
+    let trackView: TrackView
+    let valueView: ValueView
+    let knobView: KnobView
+    
     let onEditingChanged: (Bool) -> Void
     
     var height: CGFloat? = nil
@@ -16,12 +21,12 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
         GeometryReader { geometry in
             ZStack(alignment: .init(horizontal: .leading, vertical: .center)) {
                 Group {
-                    self.style.trackView
+                    self.trackView
                         .foregroundColor(self.style.trackColor)
                         .frame(width: geometry.size.width, height: self.style.thickness)
                         .cornerRadius(self.style.trackCornerRadius ?? self.style.thickness / 2)
                                     
-                    self.style.valueView
+                    self.valueView
                         .foregroundColor(self.style.valueColor)
                         .frame(width: geometry.size.width, height: self.style.thickness)
                         .cornerRadius(self.style.trackCornerRadius ?? self.style.thickness / 2)
@@ -41,14 +46,14 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                 )
 
 
-                self.style.knobView
+                self.knobView
+                    .overlay(
+                        self.knobView
+                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
+                    )
                     .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
                     .foregroundColor(self.style.knobColor)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: self.style.knobCornerRadius)
-                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
-                    )
                     .shadow(color: self.style.knobShadowColor, radius: self.style.knobShadowRadius, x: self.style.knobShadowX, y: self.style.knobShadowY)
                     .offset(x: self.xForLowerBound(width: geometry.size.width))
                     .gesture(
@@ -71,16 +76,16 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                             }
                     )
 
-                self.style.knobView
+                self.knobView
+                    .overlay(
+                        self.knobView
+                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
+                    )
                     .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
                     .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
                     .rotationEffect(Angle(degrees: 180))
                     .foregroundColor(self.style.knobColor)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: self.style.knobCornerRadius)
-                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
-                    )
                     .shadow(color: self.style.knobShadowColor, radius: self.style.knobShadowRadius, x: self.style.knobShadowX, y: self.style.knobShadowY)
                     .offset(x: self.style.knobSize.width + self.xForUpperBound(width: geometry.size.width))
                     .gesture(

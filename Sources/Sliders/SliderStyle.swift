@@ -22,8 +22,4 @@ public protocol SliderStyle {
     var trackBorderWidth: CGFloat { get set }
         
     var clippedValue: Bool { get set }
-    
-    var knobView: AnyView { get }
-    var valueView: AnyView { get }
-    var trackView: AnyView { get }
 }

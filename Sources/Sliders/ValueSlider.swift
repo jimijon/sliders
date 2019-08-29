@@ -44,13 +44,14 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                 )
 
                 self.knobView
+                    .overlay(
+                        self.knobView
+                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
+                    )
                     .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
                     .foregroundColor(self.style.knobColor)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: self.style.knobCornerRadius)
-                            .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
-                    )
+                    
                     .shadow(color: self.style.knobShadowColor, radius: self.style.knobShadowRadius, x: self.style.knobShadowX, y: self.style.knobShadowY)
                     .offset(x: self.xForValue(width: geometry.size.width))
                     .gesture(
@@ -91,7 +92,13 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
 struct ValueSlider_Previews: PreviewProvider {
     
     static var previews: some View {
-        ValueSlider(value: .constant(0.5))
+        ValueSlider(value: .constant(0.5), knobView: CustomKnob())
+            .height(100)
+            .knobColor(.blue)
+            .knobBorderWidth(4)
+            .knobCornerRadius(0)
+            .knobBorderColor(.red)
+            .previewLayout(.fixed(width: 300, height: 100))
     }
 }
 #endif

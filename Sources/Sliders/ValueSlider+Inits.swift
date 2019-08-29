@@ -17,10 +17,12 @@ extension ValueSlider {
         self.value = value
         self.bounds = bounds
         self.step = V(step)
-        self.onEditingChanged = onEditingChanged
+        
         self.trackView = trackView
         self.valueView = valueView
         self.knobView = knobView
+        
+        self.onEditingChanged = onEditingChanged
     }
 }
 

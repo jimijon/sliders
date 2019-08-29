@@ -32,3 +32,23 @@ public struct CustomKnob: View, InsettableShape {
     }
 
 }
+
+#if DEBUG
+
+struct CustomKnob_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        Group {
+            CustomKnob()
+                .overlay(
+                    CustomKnob()
+                        .strokeBorder(Color.purple, lineWidth: 5)
+                )
+                //.stroke(Color.red, lineWidth: 3)
+                .foregroundColor(Color.blue)
+                
+                .previewLayout(.fixed(width: 300, height: 100))
+        }
+    }
+}
+#endif

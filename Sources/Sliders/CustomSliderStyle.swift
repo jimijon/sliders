@@ -23,10 +23,6 @@ public struct CustomSliderStyle: SliderStyle {
 
     public var clippedValue: Bool
     
-    public var knobView: AnyView
-    public var valueView: AnyView
-    public var trackView: AnyView
-    
     public init(
         height: CGFloat = 44,
         thickness: CGFloat = 3,
@@ -44,10 +40,7 @@ public struct CustomSliderStyle: SliderStyle {
         trackCornerRadius: CGFloat? = nil,
         trackBorderColor: Color = .clear,
         trackBorderWidth: CGFloat = 0,
-        clippedValue: Bool = true,
-        knobView: AnyView = AnyView(Rectangle()),
-        valueView: AnyView = AnyView(Rectangle()),
-        trackView: AnyView = AnyView(Rectangle())
+        clippedValue: Bool = true
     ) {
         self.height = height
         self.thickness = thickness
@@ -66,8 +59,5 @@ public struct CustomSliderStyle: SliderStyle {
         self.trackBorderColor = trackBorderColor
         self.trackBorderWidth = trackBorderWidth
         self.clippedValue = clippedValue
-        self.knobView = knobView
-        self.valueView = valueView
-        self.trackView = trackView
     }
 }
