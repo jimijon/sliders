@@ -27,24 +27,24 @@ struct SliderStyleExamplesView: View {
                     .clippedValue(false)
                 
                 ValueSlider(value: $value3)
-                    .thickness(6)
                     .knobSize(CGSize(width: 16, height: 16))
+                    .thickness(6)
                 
                 ValueSlider(value: $value4, valueView:
                         LinearGradient(gradient: Gradient(colors: [.white, .blue]), startPoint: .leading, endPoint: .trailing)
                     )
+                    .knobSize(CGSize(width: 48, height: 16))
                     .thickness(6)
                     .clippedValue(false)
-                    .knobSize(CGSize(width: 48, height: 16))
                     .knobBorderColor(.red)
                     .knobBorderWidth(2)
                 
                 ValueSlider(value: $value5, valueView:
                         LinearGradient(gradient: Gradient(colors: [.black, .blue]), startPoint: .leading, endPoint: .trailing)
                     )
+                    .knobSize(CGSize(width: 16, height: 24))
                     .thickness(6)
                     .clippedValue(false)
-                    .knobSize(CGSize(width: 16, height: 24))
             }
             
             Group {
@@ -66,29 +66,34 @@ struct SliderStyleExamplesView: View {
                     )
                     .clippedValue(false)
 
-                RangeSlider(range: $range4, valueView:
-                        LinearGradient(gradient: Gradient(colors: [.green, .yellow, .red]), startPoint: .leading, endPoint: .trailing)
-                    )
-                    .thickness(8)
-                    .knobCornerRadius(8)
-                    .knobSize(CGSize(width: 16, height: 24))
+                RangeSlider(
+                    range: $range4,
+                    valueView: LinearGradient(gradient: Gradient(colors: [.green, .yellow, .red]), startPoint: .leading, endPoint: .trailing),
+                    knobView: Capsule()
+                )
+                .knobSize(CGSize(width: 16, height: 24))
+                .thickness(8)
+                .knobCornerRadius(8)
+                
+                
                 RangeSlider(range: $range5)
                     .knobCornerRadius(2)
                 
                 RangeSlider(range: $range6, valueView:
                         LinearGradient(gradient: Gradient(colors: [.red, .orange, .yellow, .green, .blue, .purple, .pink]), startPoint: .leading, endPoint: .trailing)
                     )
-                    .thickness(28)
                     .knobSize(CGSize(width: 26, height: 26))
+                    .thickness(28)
                     .trackBorderColor(Color.gray)
                     .trackBorderWidth(1)
                 
                 RangeSlider(range: $range7, valueView:
                         LinearGradient(gradient: Gradient(colors: [.blue, .red]), startPoint: .leading, endPoint: .trailing)
                     )
+                    .knobSize(CGSize(width: 48, height: 24))
                     .thickness(8)
                     .knobCornerRadius(8)
-                    .knobSize(CGSize(width: 48, height: 24))
+                    
                 
                 RangeSlider(
                     range: $range8,

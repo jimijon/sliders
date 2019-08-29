@@ -26,9 +26,9 @@ extension ValueSlider {
     }
 }
 
-extension ValueSlider where KnobView == Rectangle {
+extension ValueSlider where KnobView == Capsule {
     public init(value: Binding<V>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, trackView: TrackView, valueView: ValueView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(value: value, in: bounds, step: step, trackView: trackView, valueView: valueView, knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(value: value, in: bounds, step: step, trackView: trackView, valueView: valueView, knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }
 
@@ -44,14 +44,14 @@ extension ValueSlider where TrackView == Rectangle, ValueView == Rectangle{
     }
 }
 
-extension ValueSlider where TrackView == Rectangle, KnobView == Rectangle {
+extension ValueSlider where TrackView == Rectangle, KnobView == Capsule {
     public init(value: Binding<V>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, valueView: ValueView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(value: value, in: bounds, step: step, trackView: Rectangle(), valueView: valueView, knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(value: value, in: bounds, step: step, trackView: Rectangle(), valueView: valueView, knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }
 
-extension ValueSlider where TrackView == Rectangle, ValueView == Rectangle, KnobView == Rectangle {
+extension ValueSlider where TrackView == Rectangle, ValueView == Rectangle, KnobView == Capsule {
     public init(value: Binding<V>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(value: value, in: bounds, step: step, trackView: Rectangle(), valueView: Rectangle(), knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(value: value, in: bounds, step: step, trackView: Rectangle(), valueView: Rectangle(), knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }

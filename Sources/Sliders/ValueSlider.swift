@@ -2,17 +2,23 @@ import SwiftUI
 
 public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobView : InsettableShape>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
     @Environment(\.sliderStyle) var style
+    
     let value: Binding<V>
     let bounds: ClosedRange<V>
     let step: V
     let onEditingChanged: (Bool) -> Void
     
     var height: CGFloat? = nil
+    var preferredKnobSize: CGSize? = nil
     
     let trackView: TrackView
     let valueView: ValueView
     let knobView: KnobView
 
+    var knobSize: CGSize {
+        preferredKnobSize ?? style.knobSize
+    }
+    
     @State private var dragOffsetX: CGFloat? = nil
     
     public var body: some View {
@@ -31,7 +37,7 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                         .mask(
                             Rectangle()
                                 .frame(
-                                    width: self.style.clippedValue ? (self.xForValue(width: geometry.size.width) + self.style.knobSize.width) : geometry.size.width,
+                                    width: self.style.clippedValue ? (self.xForValue(width: geometry.size.width) + self.knobSize.width) : geometry.size.width,
                                     height: self.style.thickness
                                 )
                                 .fixedSize()
@@ -48,7 +54,7 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                         self.knobView
                             .strokeBorder(self.style.knobBorderColor, lineWidth: self.style.knobBorderWidth)
                     )
-                    .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
+                    .frame(width: self.knobSize.width, height: self.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
                     .foregroundColor(self.style.knobColor)
                     
@@ -60,7 +66,7 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
                                 if self.dragOffsetX == nil {
                                     self.dragOffsetX = value.startLocation.x - self.xForValue(width: geometry.size.width)
                                 }
-                                let relativeValue: CGFloat = (value.location.x - (self.dragOffsetX ?? 0)) / (geometry.size.width - self.style.knobSize.width)
+                                let relativeValue: CGFloat = (value.location.x - (self.dragOffsetX ?? 0)) / (geometry.size.width - self.knobSize.width)
                                 let newValue = V(CGFloat(self.bounds.lowerBound) + (relativeValue * CGFloat(self.bounds.upperBound - self.bounds.lowerBound)))
                                 let steppedNewValue = round(newValue / self.step) * self.step
                                 let validatedValue = min(self.bounds.upperBound, max(self.bounds.lowerBound, steppedNewValue))
@@ -83,7 +89,7 @@ public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobVi
     }
     
     func xForValue(width: CGFloat) -> CGFloat {
-        (width - self.style.knobSize.width) * (CGFloat(self.value.wrappedValue - bounds.lowerBound) / CGFloat(bounds.upperBound - bounds.lowerBound))
+        (width - self.knobSize.width) * (CGFloat(self.value.wrappedValue - bounds.lowerBound) / CGFloat(bounds.upperBound - bounds.lowerBound))
     }
 }
 

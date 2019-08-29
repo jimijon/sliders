@@ -8,3 +8,20 @@ public extension RangeSlider {
         return copy
     }
 }
+
+public extension RangeSlider {
+    func knobSize(_ size: CGSize) -> Self {
+//        var copy = self
+//        copy.styleKnobSize = size
+        
+        return self
+    }
+}
+
+public extension ValueSlider {
+    func knobSize(_ size: CGSize) -> Self {
+        var copy = self
+        copy.preferredKnobSize = size
+        return copy
+    }
+}

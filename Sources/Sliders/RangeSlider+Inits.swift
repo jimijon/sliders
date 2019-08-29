@@ -27,32 +27,32 @@ extension RangeSlider {
     }
 }
 
-extension RangeSlider where KnobView == Rectangle {
+extension RangeSlider where KnobView == Capsule {
     public init(range: Binding<ClosedRange<V>>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, trackView: TrackView, valueView: ValueView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(range: range, in: bounds, step: step, trackView: trackView, valueView: valueView, knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(range: range, in: bounds, step: step, trackView: trackView, valueView: valueView, knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }
 
-extension RangeSlider where TrackView == Rectangle {
+extension RangeSlider where TrackView == Capsule {
     public init(range: Binding<ClosedRange<V>>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, valueView: ValueView, knobView: KnobView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(range: range, in: bounds, step: step, trackView: Rectangle(), valueView: valueView, knobView: knobView, onEditingChanged: onEditingChanged)
+        self.init(range: range, in: bounds, step: step, trackView: Capsule(), valueView: valueView, knobView: knobView, onEditingChanged: onEditingChanged)
     }
 }
 
-extension RangeSlider where TrackView == Rectangle, ValueView == Rectangle{
+extension RangeSlider where TrackView == Capsule, ValueView == Rectangle {
     public init(range: Binding<ClosedRange<V>>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, knobView: KnobView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(range: range, in: bounds, step: step, trackView: Rectangle(), valueView: Rectangle(), knobView: knobView, onEditingChanged: onEditingChanged)
+        self.init(range: range, in: bounds, step: step, trackView: Capsule(), valueView: Rectangle(), knobView: knobView, onEditingChanged: onEditingChanged)
     }
 }
 
-extension RangeSlider where TrackView == Rectangle, KnobView == Rectangle {
+extension RangeSlider where TrackView == Capsule, KnobView == Capsule {
     public init(range: Binding<ClosedRange<V>>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, valueView: ValueView, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(range: range, in: bounds, step: step, trackView: Rectangle(), valueView: valueView, knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(range: range, in: bounds, step: step, trackView: Capsule(), valueView: valueView, knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }
 
-extension RangeSlider where TrackView == Rectangle, ValueView == Rectangle, KnobView == Rectangle {
+extension RangeSlider where TrackView == Capsule, ValueView == Rectangle, KnobView == Capsule {
     public init(range: Binding<ClosedRange<V>>, in bounds: ClosedRange<V> = 0.0...1.0, step: V.Stride = 0.001, onEditingChanged: @escaping (Bool) -> Void = { _ in }) {
-        self.init(range: range, in: bounds, step: step, trackView: Rectangle(), valueView: Rectangle(), knobView: Rectangle(), onEditingChanged: onEditingChanged)
+        self.init(range: range, in: bounds, step: step, trackView: Capsule(), valueView: Rectangle(), knobView: Capsule(), onEditingChanged: onEditingChanged)
     }
 }

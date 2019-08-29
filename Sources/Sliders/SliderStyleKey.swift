@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct SliderStyleKey: EnvironmentKey {
-    static let defaultValue: SliderStyle = CustomSliderStyle()
+public struct SliderStyleKey: EnvironmentKey {
+    public static let defaultValue: SliderStyle = CustomSliderStyle()
 }
 
 extension View {
@@ -13,13 +13,28 @@ extension View {
 
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     var sliderStyle: SliderStyle {
         get {
             return self[SliderStyleKey.self]
         }
         set {
             self[SliderStyleKey.self] = newValue
+        }
+    }
+}
+
+public struct SliderKnobSizeKey: EnvironmentKey {
+    public static let defaultValue: CGSize = CGSize(width: 27, height: 27)
+}
+
+public extension EnvironmentValues {
+    var sliderKnobSize: CGSize {
+        get {
+            return self[SliderKnobSizeKey.self]
+        }
+        set {
+            self[SliderKnobSizeKey.self] = newValue
         }
     }
 }

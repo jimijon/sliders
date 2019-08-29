@@ -9,10 +9,6 @@ extension View {
         self.environment(\.sliderStyle.thickness, length)
     }
     
-    public func knobSize(_ size: CGSize) -> some View {
-        self.environment(\.sliderStyle.knobSize, size)
-    }
-    
     public func knobColor(_ color: Color) -> some View {
         self.environment(\.sliderStyle.knobColor, color)
     }
