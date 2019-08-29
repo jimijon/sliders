@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct GradientSliderStyle: SliderStyle {
+public struct GradientSliderStyle: SliderStyle {    
     public var height: CGFloat = 44
     public var thickness: CGFloat = 3
     

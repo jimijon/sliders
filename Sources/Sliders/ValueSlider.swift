@@ -1,12 +1,17 @@
 import SwiftUI
 
-public struct ValueSlider<V>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
+public struct ValueSlider<V, TrackView: InsettableShape, ValueView: View, KnobView : InsettableShape>: View where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
     @Environment(\.sliderStyle) var style
-    
     let value: Binding<V>
     let bounds: ClosedRange<V>
     let step: V
     let onEditingChanged: (Bool) -> Void
+    
+    var height: CGFloat? = nil
+    
+    let trackView: TrackView
+    let valueView: ValueView
+    let knobView: KnobView
 
     @State private var dragOffsetX: CGFloat? = nil
     
@@ -14,12 +19,12 @@ public struct ValueSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
         GeometryReader { geometry in
             ZStack(alignment: .init(horizontal: .leading, vertical: .center)) {
                 Group {
-                    self.style.trackView
+                    self.trackView
                         .foregroundColor(self.style.trackColor)
                         .frame(height: self.style.thickness)
                         .cornerRadius(self.style.trackCornerRadius ?? self.style.thickness / 2)
 
-                    self.style.valueView
+                    self.valueView
                         .foregroundColor(self.style.valueColor)
                         .frame(height: self.style.thickness)
                         .cornerRadius(self.style.trackCornerRadius ?? self.style.thickness / 2)
@@ -38,7 +43,7 @@ public struct ValueSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                         .strokeBorder(self.style.trackBorderColor, lineWidth: self.style.trackBorderWidth)
                 )
 
-                self.style.knobView
+                self.knobView
                     .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
                     .foregroundColor(self.style.knobColor)
@@ -67,9 +72,9 @@ public struct ValueSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                             }
                     )
             }
-            .frame(height: self.style.height)
+            .frame(height: self.height ?? self.style.height)
         }
-        .frame(height: self.style.height)
+        .frame(height: self.height ?? self.style.height)
     }
     
     func maskOffset(overallWidth: CGFloat) -> CGFloat {

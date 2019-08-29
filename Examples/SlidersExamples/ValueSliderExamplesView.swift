@@ -20,15 +20,13 @@ struct ValueSliderExamplesView: View {
             ValueSlider(value: $value1, step: 0.01)
             ValueSlider(value: $value2, in: 25...125)
                 .clippedValue(false)
-            ValueSlider(value: $value3)
-                .sliderStyle(
-                    GradientSliderStyle(colors: [.green, .yellow, .red])
-                )
-            ValueSlider(value: $value4)
-                .clippedValue(false)
-                .sliderStyle(
-                    GradientSliderStyle()
-                )
+            ValueSlider(value: $value3, valueView:
+                LinearGradient(gradient: Gradient(colors: [.green, .yellow, .red]), startPoint: .leading, endPoint: .trailing)
+            )
+            ValueSlider(value: $value4, valueView:
+                LinearGradient(gradient: Gradient(colors: [.red, .orange, .yellow, .green, .blue, .purple, .pink]), startPoint: .leading, endPoint: .trailing)
+            )
+            .clippedValue(false)
         }
         .padding()
     }

@@ -96,10 +96,10 @@ struct SliderStyleExamplesView: View {
                             knobSize: CGSize(width: 32, height: 64),
                             knobColor: .white,
                             knobCornerRadius: 4,
-                            knobBorderColor: .gray,
+                            knobBorderColor: .clear,
                             knobBorderWidth: 1,
-                            knobShadowColor: .clear,
-                            knobShadowRadius: 0,
+                            knobShadowColor: .gray,
+                            knobShadowRadius: 1,
                             knobShadowX: 0,
                             knobShadowY: 0,
                             trackColor: Color.black.opacity(0.6),
@@ -107,7 +107,7 @@ struct SliderStyleExamplesView: View {
                             trackBorderColor: .clear,
                             trackBorderWidth: 0,
                             clippedValue: true,
-                            knobView: AnyView(Rectangle()),
+                            knobView: AnyView(CustomKnob()),
                             valueView: AnyView(LinearGradient(gradient: Gradient(colors: [.yellow, .orange, .red]), startPoint: .leading, endPoint: .trailing)),
                             trackView: AnyView(Rectangle())
                         )
@@ -118,6 +118,7 @@ struct SliderStyleExamplesView: View {
         .padding()
     }
 }
+
 
 struct SliderStyleExamplesView_Previews: PreviewProvider {
     static var previews: some View {

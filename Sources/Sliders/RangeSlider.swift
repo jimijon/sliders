@@ -8,6 +8,8 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
     let step: V
     let onEditingChanged: (Bool) -> Void
     
+    var height: CGFloat? = nil
+    
     @State private var dragOffsetX: CGFloat? = nil
 
     public var body: some View {
@@ -72,6 +74,8 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                 self.style.knobView
                     .frame(width: self.style.knobSize.width, height: self.style.knobSize.height)
                     .cornerRadius(self.style.knobCornerRadius)
+                    .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
+                    .rotationEffect(Angle(degrees: 180))
                     .foregroundColor(self.style.knobColor)
                     .overlay(
                         RoundedRectangle(cornerRadius: self.style.knobCornerRadius)
@@ -99,9 +103,9 @@ public struct RangeSlider<V>: View where V : BinaryFloatingPoint, V.Stride : Bin
                             }
                     )
             }
-            .frame(height: self.style.height)
+            .frame(height: self.height ?? self.style.height)
         }
-        .frame(height: self.style.height)
+        .frame(height: self.height ?? self.style.height)
     }
     
     func maskOffset(overallWidth: CGFloat) -> CGFloat {
